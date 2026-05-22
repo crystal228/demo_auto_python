@@ -97,4 +97,4 @@ def booking_api_url() -> str:
 
 @pytest.fixture()
 def booking_client(booking_api_url) -> BookingClient:
-    return BookingClient(booking_api_url)  
+    return BookingClient(booking_api_url) 

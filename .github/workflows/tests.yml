@@ -13,6 +13,7 @@ jobs:
 
     env:
       BASE_URL: https://www.saucedemo.com/
+      BOOKING_API_URL: https://restful-booker.herokuapp.com
       LOGIN: standard_user
       PASSWORD: secret_sauce
 
