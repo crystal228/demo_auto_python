@@ -1,12 +1,20 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+
+from pages.login_page import LoginPage
 
 
-def test_successful_login(page: Page):
-    page.goto("https://www.saucedemo.com/")
+def test_successful_login(
+    page: Page,
+    base_url,
+    credentials
+):
+    login_page = LoginPage(page)
 
-    page.locator('[data-test="username"]').fill("standard_user")
-    page.locator('[data-test="password"]').fill("secret_sauce")
-    page.locator('[data-test="login-button"]').click()
+    login_page.open(base_url)
 
-    expect(page).to_have_url("https://www.saucedemo.com/inventory.html")
-    expect(page.locator(".title")).to_have_text("Products")
+    login_page.login(
+        username=credentials["username"],
+        password=credentials["password"]
+    )
+
+    login_page.check_successful_login()
