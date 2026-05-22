@@ -1,5 +1,3 @@
-# demo_auto_python
-
 # Playwright Pytest Automation Demo
 
 Demo UI automation framework built with Python, Playwright and Pytest.
