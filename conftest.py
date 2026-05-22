@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+import allure
 import pytest
 from dotenv import load_dotenv
 from playwright.sync_api import Page
@@ -18,7 +19,7 @@ def base_url():
 def credentials():
     return {
         "username": os.getenv("LOGIN"),
-        "password": os.getenv("PASSWORD")
+        "password": os.getenv("PASSWORD"),
     }
 
 
@@ -29,19 +30,22 @@ def page(context, request) -> Page:
     yield page
 
     if request.node.rep_call.failed:
-
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        test_name = request.node.name
 
         os.makedirs("artifacts/screenshots", exist_ok=True)
 
-        screenshot_path = (
-            f"artifacts/screenshots/"
-            f"{request.node.name}_{timestamp}.png"
+        screenshot_path = f"artifacts/screenshots/{test_name}_{timestamp}.png"
+
+        screenshot = page.screenshot(
+            path=screenshot_path,
+            full_page=True,
         )
 
-        page.screenshot(
-            path=screenshot_path,
-            full_page=True
+        allure.attach(
+            screenshot,
+            name=f"{test_name}_screenshot",
+            attachment_type=allure.attachment_type.PNG,
         )
 
     page.close()
