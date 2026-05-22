@@ -5,6 +5,7 @@ import allure
 import pytest
 from dotenv import load_dotenv
 from playwright.sync_api import Browser, BrowserContext, Page
+from api.clients.booking_client import BookingClient
 
 
 load_dotenv()
@@ -88,3 +89,12 @@ def pytest_runtest_makereport(item, call):
     rep = outcome.get_result()
 
     setattr(item, "rep_" + rep.when, rep)
+
+@pytest.fixture(scope="session")
+def booking_api_url() -> str:
+    return os.getenv("BOOKING_API_URL", "")
+
+
+@pytest.fixture()
+def booking_client(booking_api_url) -> BookingClient:
+    return BookingClient(booking_api_url)  
