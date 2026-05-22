@@ -4,10 +4,10 @@ __pycache__/
 .env
 .history
 
+artifacts/
 test-results/
 allure-results/
 allure-report/
-artifacts/
 
 *.pyc
 .DS_Store
