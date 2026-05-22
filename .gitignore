@@ -7,6 +7,7 @@ __pycache__/
 test-results/
 allure-results/
 allure-report/
+artifacts/
 
 *.pyc
 .DS_Store
