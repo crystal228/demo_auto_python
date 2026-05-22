@@ -1,20 +1,21 @@
-from playwright.sync_api import Page, expect
+import allure
+from playwright.sync_api import Page
 
 
 class BasePage:
     def __init__(self, page: Page):
         self.page = page
 
-    def open(self, url: str):
+    @allure.step("Open page: {url}")
+    def open(self, url: str) -> None:
         self.page.goto(url)
 
-    def wait_and_click(self, locator: str):
+    @allure.step("Click element: {locator}")
+    def wait_and_click(self, locator: str) -> None:
         self.page.locator(locator).wait_for(state="visible")
         self.page.locator(locator).click()
 
-    def wait_and_fill(self, locator: str, text: str):
+    @allure.step("Fill element: {locator}")
+    def wait_and_fill(self, locator: str, text: str) -> None:
         self.page.locator(locator).wait_for(state="visible")
         self.page.locator(locator).fill(text)
-
-    def get_locator(self, locator: str):
-        return self.page.locator(locator)
